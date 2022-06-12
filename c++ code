@@ -1,0 +1,69 @@
+class Solution{
+	public:
+	
+	
+
+
+
+ int fun(int arr[], int i, int sum, vector<vector<int>> &dp){
+   
+  /*******type 1****************/ 
+     
+// if array value from 1 to n then we have different base case
+
+// if(i==0){
+// like if(sum==0)return 1;
+// if (sum==arr[0])return 1;
+//else return 0;}
+
+
+/****************type 2************/
+
+// here if array range from -ve to 0 to +ve  . it means if arr contains 0 then 
+// we have this base condition 
+// ex.{0,0,0,2,5}  here we can see thet if if sum==0 and arr[0]==0 at index 0 then 
+// we are consider both case take and not take because they both are give ans .
+//so we return 2;
+// and if sum==0 || arr[0]==sum means we take only 1 condition either take or not take
+// so we return 1;
+//else no both condition return 0
+
+
+    if(i==0){
+        
+        if(sum==0 && arr[0]==0)return 2;
+        if(sum==0 || arr[0]==sum)return 1;
+        else return 0;
+    }
+    
+    
+
+// memoization benefit meanse already stored valuse would not calculate
+// again . directly return calculated value
+
+    if(dp[i][sum]!=-1)return dp[i][sum];
+    
+// take the given number    
+    int take=0;
+    if(sum>=arr[i])
+    take=fun(arr,i-1,sum-arr[i],dp);
+ // not take the given number   
+    int not_take=fun(arr,i-1,sum,dp);
+  
+  // return the corresponding dp 
+    return dp[i][sum]=(take+not_take)%1000000007;
+    
+}
+
+
+
+
+int perfectSum(int arr[], int n, int sum){
+       vector<vector<int>> dp(n,vector<int>(sum+1,-1));
+       return fun(arr,n-1,sum,dp);
+}
+
+        
+	
+	  
+};
